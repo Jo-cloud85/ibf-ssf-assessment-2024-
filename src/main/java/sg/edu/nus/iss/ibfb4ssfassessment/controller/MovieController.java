@@ -74,6 +74,7 @@ public class MovieController {
                 Integer count = movieToBook.getCount();
                 movieToBook.setCount(count+1);
                 databaseService.updateMovie(movieToBook);
+                model.addAttribute("showMovieName", movieToBook.getTitle());
                 return "BookSuccess";
             }
         } else {
