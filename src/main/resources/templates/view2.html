@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Listing</title>
+    <link rel="stylesheet" 
+		href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+		crossorigin="anonymous">
+</head>
+<body>
+    <div class="container pt-5">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>List of Movies</h1>
+            <a class="btn btn-light rounded-pill py-2 px-4" href="/movies/logout">Logout</a>
+        </div>
+
+        <table class="table table-striped table-hover mt-3">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Movie Title</th>
+                    <th>Movie Year</th>
+                    <th>Rated</th>
+                    <th>Released On</th>
+                    <th>Runtime</th>
+                    <th>Genre</th>
+                    <th>Director</th>
+                    <th>Rating</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-th-each="movie: ${movieList}">
+                    <td data-th-text="${movie.id}"></td>
+                    <td data-th-text="${movie.title}"></td>
+                    <td data-th-text="${movie.year}"></td>
+                    <td data-th-text="${movie.rated}"></td>
+                    <td data-th-text="${#dates.format(movie.released, 'dd-MMM-yyyy')}"></td>
+                    <td data-th-text="${movie.runtime}"></td>
+                    <td data-th-text="${movie.genre}"></td>
+                    <td data-th-text="${movie.director}"></td>
+                    <td data-th-text="${movie.rating}"></td>
+                    <td class="d-flex flex-column">
+                        <a class="btn btn-warning rounded-pill px-4 py-2"
+                        data-th-href="@{movies/movie/book/{id}(id=${movie.id})}">Book
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
