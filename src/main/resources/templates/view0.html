@@ -26,13 +26,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="birthdate" class="form-label">Date of Birth</label>
-                <input type="date" class="form-control" name="birthdate" data-th-field="*{birthdate}">
+                <label for="birthdateStr" class="form-label">Date of Birth</label>
+                <input type="text" class="form-control" name="birthdateStr" data-th-field="*{birthdateStr}">
                 <div
                     class="alert alert-danger mt-3"
                     role="alert"
-                    data-th-if="${#fields.hasErrors('birthdate')}"
-                    data-th-errors="*{birthdate}"
+                    data-th-if="${#fields.hasErrors('birthdateStr')}"
+                    data-th-errors="*{birthdateStr}"
                     data-th-errorclass="error">
                 </div>
             </div>

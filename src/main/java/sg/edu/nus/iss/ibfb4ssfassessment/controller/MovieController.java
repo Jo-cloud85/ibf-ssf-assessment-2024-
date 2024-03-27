@@ -1,22 +1,16 @@
 package sg.edu.nus.iss.ibfb4ssfassessment.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.task.TaskExecutionProperties.Simple;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
@@ -52,7 +46,7 @@ public class MovieController {
     public String bookMovie(
         HttpSession session,
         Model model,
-        @PathVariable("id") String id) throws IOException  {
+        @PathVariable("id") String id) throws IOException, ParseException  {
 
         Login login = (Login) session.getAttribute("login");
 
