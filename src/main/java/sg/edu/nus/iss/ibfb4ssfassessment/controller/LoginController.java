@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.ibfb4ssfassessment.controller;
 
+import java.text.SimpleDateFormat;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +27,7 @@ public class LoginController {
         return "view0";
     }
 
-    // // TODO: Task 7
+    // TODO: Task 7
     @PostMapping
     public String processlogin(
         HttpSession session,
@@ -34,21 +36,21 @@ public class LoginController {
 
         if (result.hasErrors()) {
             return "view0";
-        } else {
-            session.setAttribute("login", login);
-            return "view1";
-        }
+        } 
+            
+        session.setAttribute("login", login);
+        return "view1";
     }
 
-    // // For the logout button shown on View 2
+    // For the logout button shown on View 2
     // On logout, session should be cleared
     @GetMapping("/movies/logout")
     public String logout(HttpSession session) {
-        if (session.getAttribute("login") != null) {
+        // if (session.getAttribute("login") != null) {
             session.invalidate();
             return "redirect:/";
-        } else {
-            return "refused";
-        }
+        // } else {
+        //     return "refused";
+        // }
     }
 }

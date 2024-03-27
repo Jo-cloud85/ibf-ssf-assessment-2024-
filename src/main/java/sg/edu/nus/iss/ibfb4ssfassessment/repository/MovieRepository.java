@@ -36,7 +36,7 @@ public class MovieRepository {
     public void saveRecordToRedis(Movie movie) throws IOException {
         hashOps = template.opsForHash();
         String movieJsonStr = convertMovieToJsonStr(movie);
-        hashOps.putIfAbsent(Util.KEY_MOVIES, movieJsonStr, movieJsonStr);
+        hashOps.putIfAbsent(Util.KEY_MOVIES, movie.getMovieId().toString(), movieJsonStr);
     }
 
     // // TODO: Task 3 (Map or List - comment where necesary)
@@ -51,7 +51,7 @@ public class MovieRepository {
     
         Movie singleMovie = movieMap.values().stream()
                                         .map(jsonStr -> fileService.convertJsonStrToMovie(jsonStr))
-                                        .filter(movie -> movie.getId().equals(movieId))
+                                        .filter(movie -> movie.getMovieId().equals(movieId))
                                         .findFirst()
                                         .get();
         return singleMovie;
@@ -70,24 +70,24 @@ public class MovieRepository {
         return movieList;
     }
 
-     @SuppressWarnings("null")
+    @SuppressWarnings("null")
     public void updateMovieToRedis(Movie movie) throws IOException {
         hashOps = template.opsForHash();
         String jsonStr = convertMovieToJsonStr(movie);
-        hashOps.put(Util.KEY_MOVIES, movie.getId().toString(), jsonStr);
-     }
+        hashOps.put(Util.KEY_MOVIES, movie.getMovieId().toString(), jsonStr);
+    }
 
     // Helper method
     // Convert each Movie object to a Json string for Redis
     // Here, time gets stored as epochmilliseconds
     public String convertMovieToJsonStr(Movie movie) throws IOException {
         JsonObject jsonObject = Json.createObjectBuilder()
-            .add("Id", movie.getId())
+            .add("Id", movie.getMovieId())
             .add("Title", movie.getTitle())
             .add("Year", movie.getYear())
             .add("Rated", movie.getRated())
-            .add("Released", movie.getReleased().getTime())//converting to epoch for saving to redis
-            .add("Runtime", movie.getRuntime())
+            .add("Released", movie.getFormattedReleaseDate().getTime())//converting to epoch for saving to redis
+            .add("Runtime", movie.getRunTime())
             .add("Genre", movie.getGenre())
             .add("Director", movie.getDirector())
             .add("Rating", movie.getRating())

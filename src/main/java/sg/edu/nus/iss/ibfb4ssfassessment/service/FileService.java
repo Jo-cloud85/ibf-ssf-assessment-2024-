@@ -22,7 +22,7 @@ import sg.edu.nus.iss.ibfb4ssfassessment.util.Util;
 public record FileService() {
 
     // Reading from movies.json file and create a giant Json string
-    public String readFile(){
+    public String parseFile(){
         StringBuilder sb = new StringBuilder();
         File file = new File(Util.FILE_PATH);
 
@@ -44,7 +44,7 @@ public record FileService() {
 
     // TODO: Task 1
     public List<Movie> readFile(String fileName) {
-        String jsonStr = readFile();
+        String jsonStr = parseFile();
         JsonArray jsonArray = Json.createReader(new StringReader(jsonStr)).readArray();
 
         List<Movie> movieList = new LinkedList<>();
@@ -63,24 +63,24 @@ public record FileService() {
         JsonObject jsonObject = reader.readObject();
         return convertJsonObjToMovie(jsonObject);
     }
-
     
     // Helper method
     // Dates in the original Json object string from movies are in epoch
     private Movie convertJsonObjToMovie(JsonObject jsonObject) {
         Movie movie = new Movie();
 
-        movie.setId(jsonObject.getInt("Id"));
+        movie.setMovieId(jsonObject.getInt("Id"));
         movie.setTitle(jsonObject.getString("Title"));
         movie.setYear(jsonObject.getString("Year"));
         movie.setRated(jsonObject.getString("Rated"));
-        Long released = jsonObject.getJsonNumber("Released").longValue();
-        Date releasedDate = new Date(released);
-        movie.setReleased(releasedDate);
-        movie.setRuntime(jsonObject.getString("Runtime"));
+        Long releasedDate = jsonObject.getJsonNumber("Released").longValue();
+        movie.setReleaseDate(releasedDate);
+        movie.setRunTime(jsonObject.getString("Runtime"));
         movie.setGenre(jsonObject.getString("Genre"));
         movie.setDirector(jsonObject.getString("Director"));
         movie.setRating(jsonObject.getJsonNumber("Rating").doubleValue());
+        Date formattedReleasedDate = new Date(releasedDate);
+        movie.setFormattedReleaseDate(formattedReleasedDate);
         movie.setCount(jsonObject.getInt("Count"));
 
         return movie;

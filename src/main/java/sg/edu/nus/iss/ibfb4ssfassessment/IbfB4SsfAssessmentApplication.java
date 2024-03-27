@@ -33,6 +33,7 @@ public class IbfB4SsfAssessmentApplication implements CommandLineRunner {
 		// Task 1 & 2
 		List<Movie> movieList = fileService.readFile(Util.FILE_PATH);
 		for (Movie movie : movieList) {
+			// System.out.println(movie);
 			databaseService.saveRecord(movie);
 		}
 		// System.out.println("Number of movies: " + databaseService.getNumberOfMovies());

@@ -26,17 +26,17 @@ import sg.edu.nus.iss.ibfb4ssfassessment.service.DatabaseService;
 import sg.edu.nus.iss.ibfb4ssfassessment.util.Util;
 
 @Controller
-@RequestMapping("/movies")
+@RequestMapping
 public class MovieController {
 
     @Autowired
     DatabaseService databaseService;
 
     // TODO: Task 8
-    @GetMapping
+    @GetMapping("/movies")
     public String displayMovies(
-        Model model,
-        HttpSession session) {
+        HttpSession session,
+        Model model) {
         
         if(session.getAttribute("login") != null) {
             List<Movie> movieList = databaseService.getAllMovies();
@@ -48,15 +48,13 @@ public class MovieController {
     }
 
     // TODO: Task 9
-    @GetMapping("/movie/book/{id}")
+    @GetMapping("/movies/movie/book/{id}")
     public String bookMovie(
         HttpSession session,
         Model model,
         @PathVariable("id") String id) throws IOException  {
 
         Login login = (Login) session.getAttribute("login");
-
-        // List<Movie> listOfAllMovies = databaseService.getAllMovies();
 
         Integer movieId = Integer.parseInt(id);
 
@@ -65,7 +63,7 @@ public class MovieController {
         if (session.getAttribute("login") != null) {
             int userAge = getAge(login.getBirthdate());
             String movieRating = movieToBook.getRated();
-            if ((userAge < 13 && !movieRating.equals("PG-13")) || (userAge < 18 && movieRating.equals("R"))) {
+            if ((userAge < 13) || (userAge >= 13 && userAge < 18 && !movieRating.equals("PG-13")) || (userAge < 18 && movieRating.equals("R"))) {
                 // underage - only pg-13
                 model.addAttribute("showErrorMsg", Util.ERROR_MSG_2);
                 return "BookError";

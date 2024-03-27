@@ -33,18 +33,18 @@
             </thead>
             <tbody>
                 <tr data-th-each="movie: ${movieList}">
-                    <td data-th-text="${movie.id}"></td>
+                    <td data-th-text="${movie.movieId}"></td>
                     <td data-th-text="${movie.title}"></td>
                     <td data-th-text="${movie.year}"></td>
                     <td data-th-text="${movie.rated}"></td>
-                    <td data-th-text="${#dates.format(movie.released, 'dd-MMM-yyyy')}"></td>
-                    <td data-th-text="${movie.runtime}"></td>
+                    <td data-th-text="${#dates.format(movie.formattedReleaseDate, 'dd-MMM-yyyy')}"></td>
+                    <td data-th-text="${movie.runTime}"></td>
                     <td data-th-text="${movie.genre}"></td>
                     <td data-th-text="${movie.director}"></td>
                     <td data-th-text="${movie.rating}"></td>
                     <td class="d-flex flex-column">
                         <a class="btn btn-warning rounded-pill px-4 py-2"
-                        data-th-href="@{movies/movie/book/{id}(id=${movie.id})}">Book
+                        data-th-href="@{movies/movie/book/{movieId}(movieId=${movie.movieId})}">Book
                         </a>
                     </td>
                 </tr>
