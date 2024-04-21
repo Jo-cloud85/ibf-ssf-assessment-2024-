@@ -35,11 +35,21 @@ public class LoginController {
         @ModelAttribute("newLogin") @Valid Login login,
         BindingResult result) throws ParseException {
 
-        if (login.getBirthdate().equals(new Date())) {
+        // if (login.getBirthdate().equals(new Date())) {
             
+        //     FieldError err = new FieldError("newLogin", "birthdateStr", "Birthday cannot be a current date");
+        //     result.addError(err);
+        //     return "view0";
+        // }
+
+        Date currentDate = new Date();
+
+        if (login.getBirthdate().equals(currentDate)) {
             FieldError err = new FieldError("newLogin", "birthdateStr", "Birthday cannot be a current date");
             result.addError(err);
-            return "view0";
+        } else if (login.getBirthdate().after(currentDate)) {
+            FieldError err = new FieldError("newLogin", "birthdateStr", "Birthday cannot be in the future");
+            result.addError(err);
         }
 
         if (result.hasErrors()) {
